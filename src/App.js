@@ -21,7 +21,6 @@ class AppComponent extends React.Component {
       console.log("Should be setting isAuthorizedUser")
       console.log(isAuthorizedUser)
     })
-    
   }
 
   render() {
