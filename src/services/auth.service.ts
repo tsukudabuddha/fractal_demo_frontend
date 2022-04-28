@@ -8,7 +8,7 @@ class AuthService {
             username: username,
             password: password
         }
-        const url = API_URL + "token/"
+        const url = API_URL + "token"
         try {
             const response = await axios.post<LoginResponse>(url, body);
             // handle success
