@@ -4,6 +4,7 @@ const API_URL = "https://dkdcue9jdc.us-west-2.awsapprunner.com/api/"
 
 class AuthService {
     public async login(username: string, password: string): Promise<boolean> {
+        console.log("starting login request");
         const body = {
             username: username,
             password: password
@@ -34,6 +35,7 @@ class AuthService {
     }
 
     public async refreshToken(): Promise<boolean> {
+        console.log("starting refresh token request");
         const url = API_URL + "token/refresh/"
         const body = {
             "refresh": Cookies.get('refreshToken')
@@ -50,6 +52,7 @@ class AuthService {
     }
 
     public async is_logged_in(): Promise<boolean> {
+        console.log("starting is logged in request");
         const url = API_URL + "is_user_logged_in"
         const config = {
             headers:{
