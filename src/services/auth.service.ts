@@ -8,16 +8,15 @@ class AuthService {
             username: username,
             password: password
         }
-        const url = API_URL + "token"
+        const url = API_URL + "token/"
         try {
-            const response = await axios.post(url, body);
+            const response = await axios.post<LoginResponse>(url, body);
             // handle success
-            const loginResponse = (response.data as LoginResponse);
+
             console.log(response);
-            console.log(loginResponse);
-            if (loginResponse.authentication_success) {
-                Cookies.set('refreshToken', loginResponse.refreshToken);
-                Cookies.set('accessToken', loginResponse.accessToken);
+            if (response.data.authentication_success) {
+                Cookies.set('refreshToken', response.data.refreshToken);
+                Cookies.set('accessToken', response.data.accessToken);
                 window.location.assign('/');
                 console.log("success");
                 return true;
@@ -29,6 +28,23 @@ class AuthService {
         } catch (error) {
             // handle error
             console.log(error);
+            console.log("login error");
+            return false;
+        }
+    }
+
+    public async refreshToken(): Promise<boolean> {
+        const url = API_URL + "token/refresh/"
+        const body = {
+            "refresh": Cookies.get('refreshToken')
+        }
+        try {
+            const response = await axios.post<RefreshTokenResponse>(url, body);
+            Cookies.set('accessToken', response.data.access)
+            return true;
+        } catch (error) {
+            // Force log out user + re authenticate
+            console.log("should re auth")
             return false;
         }
     }
@@ -44,7 +60,15 @@ class AuthService {
             const response = await axios.get(url, config)
             return true;
         } catch (error) {
-            console.log(error)
+            if (axios.isAxiosError(error) && error.response)  {
+                // Access to config, request, and response
+                if (error.response.status === 401) {
+                    console.log("should refresh token");
+                    return this.refreshToken()
+                }
+              } else {
+                // Just a stock error
+              }
             return false;
         }
     }
@@ -57,4 +81,8 @@ type LoginResponse = {
     session_id: string,
     refreshToken: string,
     accessToken: string
+};
+
+type RefreshTokenResponse = {
+    access: string
 };
