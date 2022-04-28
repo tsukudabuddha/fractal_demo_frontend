@@ -32,9 +32,25 @@ class AuthService {
             return false;
         }
     }
-}
 
-export default AuthService;
+    public async is_logged_in(): Promise<boolean> {
+        const url = API_URL + "is_user_logged_in"
+        const config = {
+            headers:{
+                'Authorization': `Bearer ${Cookies.get('accessToken')}`
+            }
+        };
+        try {
+            const response = await axios.get(url, config)
+            return true;
+        } catch (error) {
+            console.log(error)
+            return false;
+        }
+    }
+}   
+
+export default new AuthService;
 
 type LoginResponse = {
     authentication_success: boolean,

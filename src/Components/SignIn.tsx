@@ -38,9 +38,7 @@ export default function SignIn() {
     const username: string = String(data.get('username'));
     const password: string = String(data.get('password'));
 
-    const auth = new AuthService; 
-    await auth.login(username, password);
-
+    await AuthService.login(username, password);
   };
 
   return (

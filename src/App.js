@@ -1,6 +1,6 @@
 import './App.css';
-import Cookies from 'js-cookie';
 import React from 'react';
+import AuthService from './services/auth.service';
 
 function App() {
   return (<AppComponent />);
@@ -16,7 +16,7 @@ class AppComponent extends React.Component {
   }
 
   async componentDidMount() {
-    await this.check_login().then(isAuthorizedUser => {
+    await AuthService.is_logged_in().then(isAuthorizedUser => {
       this.setState({ isAuthorizedUser: isAuthorizedUser });
       console.log("Should be setting isAuthorizedUser")
       console.log(isAuthorizedUser)
@@ -44,31 +44,6 @@ class AppComponent extends React.Component {
   navigateToLogin() {
     // Navigate to Login
     window.location.assign('/login');
-  }
-
-  isLoggedIn() {
-    return this.check_login()
-  }
-
-  async check_login() {
-    const url = 'http://127.0.0.1:8000/api/is_user_logged_in'
-    const axios = require('axios').default;
-    const config = {
-      headers:{
-        'Authorization': `Bearer ${Cookies.get('accessToken')}`
-      }
-    };
-    return await axios.get(url, config)
-      .then(function (response) {
-        // handle success
-        console.log(response);
-        return true;
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-        return false;
-      })
   }
 }
 
