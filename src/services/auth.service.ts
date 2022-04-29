@@ -10,8 +10,13 @@ class AuthService {
             password: password
         }
         const url = API_URL + "token"
+        const axiosOptions = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
         try {
-            const response = await axios.post<LoginResponse>(url, body);
+            const response = await axios.post<LoginResponse>(url, body, axiosOptions);
             // handle success
 
             console.log(response);
