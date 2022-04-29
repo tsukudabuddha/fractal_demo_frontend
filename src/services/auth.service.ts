@@ -9,7 +9,7 @@ class AuthService {
             username: username,
             password: password
         }
-        const url = API_URL + "token"
+        const url = API_URL + "token/"
         const axiosOptions = {
             headers: {
                 "Content-Type": "application/json"
