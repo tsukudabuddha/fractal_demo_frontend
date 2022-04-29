@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
-const API_URL = "https://dkdcue9jdc.us-west-2.awsapprunner.com/api/"
+const API_URL = "http://dkdcue9jdc.us-west-2.awsapprunner.com/api/"
 
 class AuthService {
     public async login(username: string, password: string): Promise<boolean> {
