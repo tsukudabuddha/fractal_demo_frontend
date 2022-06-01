@@ -1,3 +1,10 @@
+# Fractal Demo Frontend
+
+## What is this?
+My first react project. Just wanted to build basic login / token authentication.
+
+------
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
